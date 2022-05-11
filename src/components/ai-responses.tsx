@@ -1,10 +1,28 @@
 import styled from "styled-components";
+import { ResponseCard } from "./";
+import { PromptHistoryTypes } from "../views/ai-prompt-view";
 
-const AiResponses = () => {
+type Props = {
+  promptHistory: PromptHistoryTypes[];
+};
+
+const AiResponses = ({ promptHistory }: Props) => {
+  const allResponses = promptHistory
+    .filter((value) => value.prompt !== "" && value.promptResponse !== "")
+    .map((response, index) => {
+      return (
+        <ResponseCard
+          key={index}
+          prompt={response.prompt}
+          promptResponse={response.promptResponse}
+        />
+      );
+    });
+
   return (
     <ResponseWrap>
       <ResponseHeader>Responses</ResponseHeader>
-      <ResponseBody />
+      <ResponseBody>{allResponses}</ResponseBody>
     </ResponseWrap>
   );
 };
@@ -17,6 +35,7 @@ const ResponseWrap = styled.div`
   flex-direction: column;
   align-items: center;
   flex: 7;
+  margin-bottom: 15px;
 `;
 
 const ResponseHeader = styled.h2`
@@ -29,7 +48,11 @@ const ResponseBody = styled.div`
   height: 100%;
   width: 95%;
   display: flex;
+  flex-direction: column;
   border: 1px solid black;
+  overflow: scroll;
+  max-height: 382px;
+  padding: 5px;
 `;
 
 /** Exports */

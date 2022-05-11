@@ -1,18 +1,28 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-const PromptAi = () => {
-  const [prompt, setPrompt] = useState("");
+type PromptTypes = {
+  sendPrompt: (prompt: string) => void;
+};
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setPrompt(e.target.value);
-  };
+const PromptAi = ({ sendPrompt }: PromptTypes) => {
+  const [promptInputValue, setPromptInputValue] = useState<string>("");
 
   return (
     <PromptWrap>
       <div>Enter Prompt:</div>
-      <PromptTextArea value={prompt} onChange={handleChange} />
-      <button>Submit</button>
+      <PromptTextArea
+        value={promptInputValue}
+        onChange={(e) => setPromptInputValue(e.target.value)}
+      />
+      <button
+        onClick={() => {
+          sendPrompt(promptInputValue);
+          setPromptInputValue("");
+        }}
+      >
+        Submit
+      </button>
     </PromptWrap>
   );
 };
