@@ -50,6 +50,7 @@ const ResponseBody = styled.div`
   display: flex;
   flex-direction: column;
   border: 1px solid black;
+  border-radius: 10px;
   overflow: scroll;
   max-height: 382px;
   padding: 5px;

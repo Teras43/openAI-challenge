@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import _ from "lodash";
 
 type PromptTypes = {
   sendPrompt: (prompt: string) => void;
@@ -8,6 +9,18 @@ type PromptTypes = {
 const PromptAi = ({ sendPrompt }: PromptTypes) => {
   const [promptInputValue, setPromptInputValue] = useState<string>("");
 
+  const suggestPrompt = () => {
+    const suggestionArray: string[] = [
+      "Hello, how are you today?",
+      "What is your favorite color?",
+      "Could you read me a poem?",
+      "What do you do when you feel sad?",
+      "What do you do when you feel happy?",
+    ];
+    const randomPrompt = _.sample(suggestionArray);
+    setPromptInputValue(randomPrompt as string);
+  };
+
   return (
     <PromptWrap>
       <div>Enter Prompt:</div>
@@ -15,14 +28,23 @@ const PromptAi = ({ sendPrompt }: PromptTypes) => {
         value={promptInputValue}
         onChange={(e) => setPromptInputValue(e.target.value)}
       />
-      <button
-        onClick={() => {
-          sendPrompt(promptInputValue);
-          setPromptInputValue("");
-        }}
-      >
-        Submit
-      </button>
+      <BtnSection>
+        <SubmitBtn
+          onClick={() => {
+            sendPrompt(promptInputValue);
+            setPromptInputValue("");
+          }}
+        >
+          Submit
+        </SubmitBtn>
+        <SuggestBtn
+          onClick={() => {
+            suggestPrompt();
+          }}
+        >
+          Suggest
+        </SuggestBtn>
+      </BtnSection>
     </PromptWrap>
   );
 };
@@ -40,6 +62,29 @@ const PromptWrap = styled.div`
 const PromptTextArea = styled.textarea`
   width: 90%;
   height: 50%;
+  border-radius: 10px;
+`;
+
+const BtnSection = styled.div`
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+`;
+
+const SubmitBtn = styled.button`
+  width: 80px;
+  height: 30px;
+`;
+
+const SuggestBtn = styled.button`
+  width: 70px;
+  height: 25px;
+  margin-left: 100px;
+  font-style: italic;
+  border: none;
+  background-color: white;
 `;
 
 /** Exports */
