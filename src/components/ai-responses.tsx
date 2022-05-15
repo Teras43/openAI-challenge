@@ -42,6 +42,7 @@ const ResponseHeader = styled.h2`
   display: flex;
   justify-content: flex-start;
   font-size: 16px;
+  color: #e6e6e9;
 `;
 
 const ResponseBody = styled.div`
@@ -49,11 +50,12 @@ const ResponseBody = styled.div`
   width: 95%;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  border: 1px solid #e6e6e9;
   border-radius: 10px;
   overflow: scroll;
   max-height: 382px;
   padding: 5px;
+  background-color: black;
 `;
 
 /** Exports */
