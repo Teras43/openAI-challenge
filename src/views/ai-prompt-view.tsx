@@ -16,6 +16,16 @@ const PromptView = () => {
   const [promptHistory, setPromptHistory] = useState<PromptHistoryTypes[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const saveHistory = () => {
+    localStorage.setItem("promptHistory", JSON.stringify(promptHistory));
+  };
+
+  const getHistory = () => {
+    const stringifiedHistory = localStorage.getItem("promptHistory");
+    const prevPromptHistory = JSON.parse(stringifiedHistory as string);
+    setPromptHistory(prevPromptHistory);
+  };
+
   useEffect(() => {
     getHistory();
     setPromptHistory((prev) => {
@@ -51,16 +61,6 @@ const PromptView = () => {
       })
     );
   }, []);
-
-  const saveHistory = () => {
-    localStorage.setItem("promptHistory", JSON.stringify(promptHistory));
-  };
-
-  const getHistory = () => {
-    const stringifiedHistory = localStorage.getItem("promptHistory");
-    const prevPromptHistory = JSON.parse(stringifiedHistory as string);
-    setPromptHistory(prevPromptHistory);
-  };
 
   return (
     <PageWrapper>
