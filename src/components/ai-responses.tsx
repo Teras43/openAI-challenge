@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import { ResponseCard } from "./";
 import { PromptHistoryTypes } from "../views/ai-prompt-view";
+import { useEffect, useRef } from "react";
 
 type Props = {
   promptHistory: PromptHistoryTypes[];
 };
 
 const AiResponses = ({ promptHistory }: Props) => {
+  const bottomMessageRef = useRef<HTMLDivElement | null>(null);
+
   const allResponses = promptHistory
     .filter((value) => value.prompt !== "" && value.promptResponse !== "")
     .map((response, index) => {
@@ -19,10 +22,17 @@ const AiResponses = ({ promptHistory }: Props) => {
       );
     });
 
+  useEffect(() => {
+    bottomMessageRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [allResponses]);
+
   return (
     <ResponseWrap>
       <ResponseHeader>Responses</ResponseHeader>
-      <ResponseBody>{allResponses}</ResponseBody>
+      <ResponseBody>
+        {allResponses}
+        <div ref={bottomMessageRef}></div>
+      </ResponseBody>
     </ResponseWrap>
   );
 };
